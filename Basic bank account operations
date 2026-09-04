@@ -1,0 +1,102 @@
+/**
+ * Nathan Carpio
+ * 08/30/2026
+ * In this program users may select from an interaction menu with the preset options
+   to Check Balance, Deposit Money, Withdraw Money and Exit the Program.
+ */
+
+import java.util.Scanner;
+
+public class LabAssignmentOne {
+    private static double balance = 0.0;
+
+    public static void main (String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        boolean running = true;
+
+        while (running) {
+            optionMenu();
+
+    if(scanner.hasNextInt()) {
+        int choice = scanner.nextInt();
+        switch (choice) { // determines what task to perform based on the user's selection from the menu
+            case 1:
+                System.out.printf("Current Balance: $%.2f%n", currentBalance());
+                break;
+            case 2:
+                System.out.print("Enter the deposit amount: $");
+                if (scanner.hasNextDouble()) {
+                    double anotherDeposit = scanner.nextDouble();
+                    amountDeposited(anotherDeposit);
+                } else {
+                    System.out.println("Not an valid input! Must be a number.");
+                    scanner.next();
+                }
+                break;
+            case 3:
+                System.out.print("Enter the withdraw amount: $");
+                if (scanner.hasNextDouble()) {
+                    double withdrawBalance = scanner.nextDouble();
+                    withdraw(withdrawBalance);
+                } else {
+                    System.out.println("Not an valid input! Must be a number.");
+                    scanner.next();
+                }
+                break;
+            case 4:
+                running = false;
+                System.out.println("Thank you, Goodbye!");
+                break;
+            default:
+                System.out.println("Not an valid input, Please enter a valid number from (1-4)");
+        }
+    } else {
+        System.out.println("Invalid input");
+        scanner.next();
+    }
+
+    System.out.println();
+    }
+    scanner.close();
+}
+
+private static void optionMenu() {
+
+
+// menu list in which the user may select from the options between (1-4)
+    System.out.println("1) Check Balance");
+    System.out.println("2) Deposit Money");
+    System.out.println("3) Withdraw Money");
+    System.out.println("4) Exit the Program");
+    System.out.println("--------------------");
+    System.out.println("Please enter an valid number (1-4) from the options above");
+
+}
+
+public static double currentBalance(){
+    return balance;
+}
+
+// allows for the user to deposit a positive amount to the balance
+public static void amountDeposited(double amount) {
+    if (amount > 0) {
+        balance += amount;
+        System.out.printf("Amount Deposited $%.2f. Your current balance is $%.2f%n", amount, balance);
+    } else {
+        System.out.println("Unsuccessful, The amount must be greater than zero!");
+    }
+}
+
+// allows for the user to withdraw an amount from the balance
+public static void withdraw(double amount) {
+    if (amount <= 0) {
+        System.out.println("Unsuccessful, The amount must be greater than zero!");
+    } else if (amount > balance) {
+        System.out.printf("Unsuccessful, not sufficient funds. Your current balance is $%.2f%n", balance);
+    } else {
+        balance -= amount;
+        System.out.printf("Withdraw amount $%.2f. Your new balance is $%.2f%n", amount, balance);
+
+    }
+}
+}
